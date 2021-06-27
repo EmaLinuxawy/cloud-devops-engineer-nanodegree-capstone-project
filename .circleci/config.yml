@@ -68,7 +68,5 @@ workflows:
           requires: [install]
       - build-image:
           requires: [lint]
-      - push-image:
-          requires: [build-image]
       - deploy:
-          requires: [push-image]
+          requires: [build-image]
