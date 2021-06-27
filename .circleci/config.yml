@@ -1,0 +1,75 @@
+version: 2
+jobs:
+  install:
+    docker:
+      # Use the same Docker base as the project
+      - image: python:3.7.3-stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+            name: install dependencies
+            command: |
+              python3 -m venv venv
+              . venv/bin/activate
+              cd app
+              make install
+              # Install hadolint
+              wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+              chmod +x /bin/hadolin
+  lint:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - run:
+          name: run lint
+          command: |
+            . venv/bin/activate
+              cd app
+            make lint
+  build-image:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - run:
+          name: Build Docker image
+          command: |
+            cd app \
+            && docker build -t linuxawy/ml-microservices .
+  push-image:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+      - run:
+          name: Push Docker image
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push linuxawy/ml-microservices
+  deploy:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Deploying application to EKS
+          command: |
+             aws eks --region us-east-2 update-kubeconfig --name capstone
+             kubectl config use-context arn:aws:eks:us-east-2:963540097012:cluster/capstone
+             kubectl apply -f deployment.yml
+             kubectl get pods
+             kubectl get services
+workflows:
+  default:
+    jobs:
+      - install
+      - lint
+          requires: [install]
+      - build-image:
+          requires: [lint]
+      - push-image:
+          requires: [build-image]
+      - deploy:
+          requires: [push-image]
