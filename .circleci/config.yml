@@ -35,9 +35,10 @@ jobs:
             make lint
   build-image:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Build Docker image
           command: |
@@ -46,9 +47,10 @@ jobs:
             && docker build -t linuxawy/ml-microservices .
   push-image:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Push Docker image
           command: |
