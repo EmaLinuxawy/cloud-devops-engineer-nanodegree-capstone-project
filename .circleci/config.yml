@@ -11,7 +11,7 @@ jobs:
           name: install dependencies
           command: |
             python3 -m venv ~/venv
-            . venv/bin/activate
+            . ~/venv/bin/activate
             cd app
             make install
             # Install hadolint
@@ -27,7 +27,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: cache
+          keys: cache
       - run:
           name: run lint
           command: |
