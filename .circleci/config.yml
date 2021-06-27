@@ -13,9 +13,6 @@ jobs:
             . ~/venv/bin/activate
             cd app
             make install
-            # Install hadolint
-            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
-            chmod +x /bin/hadolint
       - save_cache:
           key: cache
           paths:
@@ -31,8 +28,11 @@ jobs:
           name: run lint
           command: |
             . ~/repo/venv/bin/activate
-              cd app
-              make lint
+            cd app
+            # Install hadolint
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolint
+            make lint
   build-image:
     docker:
       - image: python:3.7.3-stretch
