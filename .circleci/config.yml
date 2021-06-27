@@ -61,6 +61,7 @@ jobs:
           capstone
         type: string
     steps:
+      - checkout
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: << parameters.cluster-name >>
