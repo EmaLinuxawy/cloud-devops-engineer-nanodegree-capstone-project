@@ -10,7 +10,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python3 -m venv ~/venv
             . venv/bin/activate
             cd app
             make install
@@ -18,9 +18,9 @@ jobs:
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
             chmod +x /bin/hadolint
       - save_cache:
-            key: cache
-            paths:
-              - ./venv
+          key: cache
+          paths:
+            - ~/venv
   lint:
     docker:
       - image: python:3.7.3-stretch
@@ -31,7 +31,7 @@ jobs:
       - run:
           name: run lint
           command: |
-            . venv/bin/activate
+            . ~/venv/bin/activate
               cd app
               make lint
   build-image:
