@@ -44,17 +44,9 @@ jobs:
           command: |
             cd app \
             && docker build -t linuxawy/ml-microservices .
-  push-image:
-    docker:
-      - image: circleci/buildpack-deps:stretch
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Push Docker image
-          command: |
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push linuxawy/ml-microservices
+
   deploy:
     docker:
       - image: amazon/aws-cli
