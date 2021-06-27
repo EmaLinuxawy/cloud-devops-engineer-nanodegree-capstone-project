@@ -82,3 +82,4 @@ workflows:
           requires: [lint]
       - deploy:
           requires: [build-image]
+          cluster-name: capstone
