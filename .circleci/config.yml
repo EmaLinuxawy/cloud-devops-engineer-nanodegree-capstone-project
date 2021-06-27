@@ -41,6 +41,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
+            systemctl start docker
             cd app \
             && docker build -t linuxawy/ml-microservices .
   push-image:
@@ -51,11 +52,7 @@ jobs:
       - run:
           name: Push Docker image
           command: |
-            apk add --no-cache \
-            py-pip=9.0.0-r1
-            pip install \
-            docker-compose==1.12.0 \
-            awscli==1.11.76
+            systemctl start docker
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push linuxawy/ml-microservices
   deploy:
