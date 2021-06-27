@@ -35,7 +35,7 @@ jobs:
             make lint
   build-image:
     docker:
-      - image: python:3.7.3-stretch
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - run:
@@ -45,7 +45,7 @@ jobs:
             && docker build -t linuxawy/ml-microservices .
   push-image:
     docker:
-      - image: python:3.7.3-stretch
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - run:
