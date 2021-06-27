@@ -42,7 +42,6 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            systemctl start docker
             cd app \
             && docker build -t linuxawy/ml-microservices .
   push-image:
@@ -54,7 +53,6 @@ jobs:
       - run:
           name: Push Docker image
           command: |
-            systemctl start docker
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push linuxawy/ml-microservices
   deploy:
