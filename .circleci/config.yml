@@ -57,10 +57,10 @@ jobs:
           command: |
             curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl && chmod u+s kubectl
              aws eks --region us-east-2 update-kubeconfig --name capstone
-             ./kubectl config use-context arn:aws:eks:us-east-2:572199075108:cluster/capstone
-             ./kubectl apply -f deployment.yml
-             ./kubectl get pods
-             ./kubectl get services
+             sudo ./kubectl config use-context arn:aws:eks:us-east-2:572199075108:cluster/capstone
+             sudo ./kubectl apply -f deployment.yml
+             sudo ./kubectl get pods
+             sudo ./kubectl get services
 workflows:
   default:
     jobs:
