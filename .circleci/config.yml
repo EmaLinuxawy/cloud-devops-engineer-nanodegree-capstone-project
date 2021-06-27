@@ -17,17 +17,23 @@ jobs:
             # Install hadolint
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
             chmod +x /bin/hadolint
+      - save_cache:
+            key: cache
+            paths:
+              - ./venv
   lint:
     docker:
       - image: python:3.7.3-stretch
     steps:
       - checkout
+      - restore_cache:
+          key: cache
       - run:
           name: run lint
           command: |
             . venv/bin/activate
               cd app
-            make lint
+              make lint
   build-image:
     docker:
       - image: python:3.7.3-stretch
