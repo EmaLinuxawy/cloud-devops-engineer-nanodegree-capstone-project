@@ -8,15 +8,15 @@ jobs:
     steps:
       - checkout
       - run:
-            name: install dependencies
-            command: |
-              python3 -m venv venv
-              . venv/bin/activate
-              cd app
-              make install
-              # Install hadolint
-              wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
-              chmod +x /bin/hadolin
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            cd app
+            make install
+            # Install hadolint
+            wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+            chmod +x /bin/hadolin
   lint:
     docker:
       - image: python:3.7.3-stretch
@@ -57,7 +57,7 @@ jobs:
           name: Deploying application to EKS
           command: |
              aws eks --region us-east-2 update-kubeconfig --name capstone
-             kubectl config use-context arn:aws:eks:us-east-2:963540097012:cluster/capstone
+             kubectl config use-context arn:aws:eks:us-east-2:572199075108:cluster/capstone
              kubectl apply -f deployment.yml
              kubectl get pods
              kubectl get services
@@ -65,7 +65,7 @@ workflows:
   default:
     jobs:
       - install
-      - lint
+      - lint:
           requires: [install]
       - build-image:
           requires: [lint]
