@@ -30,7 +30,7 @@ jobs:
       - run:
           name: run lint
           command: |
-            . ~/venv/bin/activate
+            . ~/repo/venv/bin/activate
               cd app
               make lint
   build-image:
