@@ -1,4 +1,6 @@
+[![CircleCI](https://circleci.com/gh/EmaLinuxawy/cloud-devops-engineer-nanodegree-capstone-project/tree/master.svg?style=svg)](https://circleci.com/gh/EmaLinuxawy/cloud-devops-engineer-nanodegree-capstone-project/tree/master)
 # cloud-devops-engineer-nanodegree-capstone-project
+[This is Repo URL for Reviewier](https://github.com/EmaLinuxawy/cloud-devops-engineer-nanodegree-capstone-project)
 
 My Capstone Project for Udacity's Cloud DevOps Engineer Nanodegree
 
